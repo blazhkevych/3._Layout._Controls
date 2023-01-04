@@ -18,6 +18,9 @@ namespace task
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+    // Элементы управления 22:13
+
     public partial class MainWindow : Window
     {
         public MainWindow()

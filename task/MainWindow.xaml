@@ -5,8 +5,145 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:task"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="MainWindow" Height="450" Width="350">
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Name="LabelDisplayOfPreviousOperations">
+        </Label>
+        <Label Grid.Row="1" Grid.Column="0" Name="LabelInputDisplay">
+        </Label>
+        <Grid Row="2" Name="ButtonsGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                Name="ButtonCe"
+                Grid.Row="0" Grid.Column="0"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="CE" />
+            <Button
+                Name="ButtonC"
+                Grid.Row="0" Grid.Column="1"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="C" />
+            <Button
+                Name="ButtonClear"
+                Grid.Row="0" Grid.Column="2"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="&lt;" />
+            <Button
+                Name="ButtonDivide"
+                Grid.Row="0" Grid.Column="3"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="/" />
+            <Button
+                Name="Button7"
+                Grid.Row="1" Grid.Column="0"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="7" />
+            <Button
+                Name="Button8"
+                Grid.Row="1" Grid.Column="1"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="8" />
+            <Button
+                Name="Button9"
+                Grid.Row="1" Grid.Column="2"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="9" />
+            <Button
+                Name="ButtonMultiply"
+                Grid.Row="1" Grid.Column="3"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="*" />
+            <Button
+                Name="Button4"
+                Grid.Row="2" Grid.Column="0"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="4" />
+            <Button
+                Name="Button5"
+                Grid.Row="2" Grid.Column="1"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="5" />
+            <Button
+                Name="Button6"
+                Grid.Row="2" Grid.Column="2"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="6" />
+            <Button
+                Name="ButtonMinus"
+                Grid.Row="2" Grid.Column="3"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="-" />
+            <Button
+                Name="Button1"
+                Grid.Row="3" Grid.Column="0"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="1" />
+            <Button
+                Name="Button2"
+                Grid.Row="3" Grid.Column="1"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="2" />
+            <Button
+                Name="Button3"
+                Grid.Row="3" Grid.Column="2"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="3" />
+            <Button
+                Name="ButtonPlus"
+                Grid.Row="3" Grid.Column="3"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="+" />
+            <Button
+                Name="ButtonDot"
+                Grid.Row="4" Grid.Column="0"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="." />
+            <Button
+                Name="ButtonZero"
+                Grid.Row="4" Grid.Column="1" 
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="0" />
+            <Button
+                Name="ButtonEqual"
+                Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2"
+                Margin="3,3,3,3"
+                FontSize="48"
+                Content="=" />
+        </Grid>
     </Grid>
 </Window>

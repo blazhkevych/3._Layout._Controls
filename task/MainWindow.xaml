@@ -13,8 +13,11 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Name="LabelDisplayOfPreviousOperations"/>
-        <Label Grid.Row="1" Grid.Column="0" Name="LabelInputDisplay">
-        </Label>
+        <Label Grid.Row="1" Grid.Column="0" 
+               Name="LabelInputDisplay" 
+               Content="0" 
+               HorizontalContentAlignment="Right" 
+               FontSize="24"/>
         <Grid Row="2" Name="ButtonsGrid">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -34,7 +37,7 @@
                 Grid.Row="0" Grid.Column="0"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="CE" />
+                Content="CE" Click="ButtonCe_Click" />
             <Button
                 Name="ButtonC"
                 Grid.Row="0" Grid.Column="1"

@@ -65,5 +65,11 @@ namespace task
         {
             InitializeComponent();
         }
+
+        // The CE button clears the current number.
+        private void ButtonCe_Click(object sender, RoutedEventArgs e)
+        {
+            LabelInputDisplay.Content = "";
+        }
     }
 }

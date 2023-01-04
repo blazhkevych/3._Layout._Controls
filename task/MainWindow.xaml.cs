@@ -21,9 +21,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace task
 {
     // Элементы управления 22:13
-    // сетка грид
-    // большие цифры - лейбл или текст блок
-    
+
     // Тема «Элементы управления»
     // Разработать WPF-приложение «Калькулятор».
     // 

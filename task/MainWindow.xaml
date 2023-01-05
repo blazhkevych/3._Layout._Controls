@@ -12,7 +12,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Name="LabelDisplayOfPreviousOperations"/>
+        <Label Grid.Row="0" Grid.Column="0" 
+               Name="LabelDisplayOfPreviousOperations"/>
         <Label Grid.Row="1" Grid.Column="0" 
                Name="LabelInputDisplay" 
                Content="0" 
@@ -43,13 +44,14 @@
                 Grid.Row="0" Grid.Column="1"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="C" />
+                Content="C" Click="ButtonC_OnClick"/>
             <Button
                 Name="ButtonClear"
                 Grid.Row="0" Grid.Column="2"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="&lt;" />
+                Content="&lt;" 
+                Click="ButtonClear_OnClick"/>
             <Button
                 Name="ButtonDivide"
                 Grid.Row="0" Grid.Column="3"

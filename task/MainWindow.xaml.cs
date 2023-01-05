@@ -69,7 +69,21 @@ namespace task
         // The CE button clears the current number.
         private void ButtonCe_Click(object sender, RoutedEventArgs e)
         {
-            LabelInputDisplay.Content = "";
+            LabelInputDisplay.Content = "0";
+        }
+
+        // The "C" button clears the current number and the previous expression.
+        private void ButtonC_OnClick(object sender, RoutedEventArgs e)
+        {
+            LabelInputDisplay.Content = "0";
+            LabelDisplayOfPreviousOperations.Content = "0";
+        }
+
+        // The "<" button clears the last entered character in the current number.
+        private void ButtonClear_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+
         }
     }
 }

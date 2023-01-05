@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:task"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="350">
+        Title="Calculator" Height="450" Width="350">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -13,7 +13,10 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" 
-               Name="LabelDisplayOfPreviousOperations"/>
+               Name="LabelDisplayOfPreviousOperations"
+               Content=""
+               HorizontalContentAlignment="Right" 
+               FontSize="24"/>
         <Label Grid.Row="1" Grid.Column="0" 
                Name="LabelInputDisplay" 
                Content="0" 
@@ -57,97 +60,99 @@
                 Grid.Row="0" Grid.Column="3"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="/" />
+                Content="/" Click="ButtonOperation_OnClick"/>
             <Button
                 Name="Button7"
                 Grid.Row="1" Grid.Column="0"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="7" />
+                Content="7" Click="ButtonNumber_OnClick"/>
             <Button
                 Name="Button8"
                 Grid.Row="1" Grid.Column="1"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="8" />
+                Content="8" Click="ButtonNumber_OnClick"/>
             <Button
                 Name="Button9"
                 Grid.Row="1" Grid.Column="2"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="9" />
+                Content="9" Click="ButtonNumber_OnClick"/>
             <Button
                 Name="ButtonMultiply"
                 Grid.Row="1" Grid.Column="3"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="*" />
+                Content="*" Click="ButtonOperation_OnClick"/>
             <Button
                 Name="Button4"
                 Grid.Row="2" Grid.Column="0"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="4" />
+                Content="4" Click="ButtonNumber_OnClick"/>
             <Button
                 Name="Button5"
                 Grid.Row="2" Grid.Column="1"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="5" />
+                Content="5" Click="ButtonNumber_OnClick"/>
             <Button
                 Name="Button6"
                 Grid.Row="2" Grid.Column="2"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="6" />
+                Content="6" Click="ButtonNumber_OnClick"/>
             <Button
                 Name="ButtonMinus"
                 Grid.Row="2" Grid.Column="3"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="-" />
+                Content="-" Click="ButtonOperation_OnClick"/>
             <Button
                 Name="Button1"
                 Grid.Row="3" Grid.Column="0"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="1" />
+                Content="1" Click="ButtonNumber_OnClick" />
             <Button
                 Name="Button2"
                 Grid.Row="3" Grid.Column="1"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="2" />
+                Content="2" Click="ButtonNumber_OnClick"/>
             <Button
                 Name="Button3"
                 Grid.Row="3" Grid.Column="2"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="3" />
+                Content="3" Click="ButtonNumber_OnClick"/>
             <Button
                 Name="ButtonPlus"
                 Grid.Row="3" Grid.Column="3"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="+" />
+                Content="+" Click="ButtonOperation_OnClick"/>
             <Button
                 Name="ButtonDot"
                 Grid.Row="4" Grid.Column="0"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="." />
+                Content="." Click="ButtonDot_OnClick"/>
             <Button
                 Name="ButtonZero"
                 Grid.Row="4" Grid.Column="1" 
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="0" />
+                Content="0" Click="ButtonNumber_OnClick" />
             <Button
                 Name="ButtonEqual"
-                Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2"
+                Grid.Row="4" Grid.Column="2" 
+                Grid.ColumnSpan="2"
                 Margin="3,3,3,3"
                 FontSize="48"
-                Content="=" />
+                Content="=" 
+                Click="ButtonEqual_OnClick"/>
         </Grid>
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace task;
 // Элементы управления 22:13
@@ -78,10 +79,20 @@ public partial class MainWindow : Window
 
     // Начало ввода нового числа.
     private bool _newNumber = false;
+    // Был нажат ентер
+    private bool _result = false;
 
     // Buttons "0" - "9" add the corresponding digit to the end of the current number.
     private void ButtonNumber_OnClick(object sender, RoutedEventArgs e)
     {
+        // Если был нажат "=", то сбросить все поля на значения по умолчанию.
+        if (_result)
+        {
+            LabelInputDisplay.Content = "0";
+            LabelDisplayOfPreviousOperations.Content = "";
+            _result = false;
+        }
+
         // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = 0, нажата КЛАВИША 0.
         if (LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString() == "0" && ((Button)sender).Content.ToString() == "0")
             return;
@@ -124,24 +135,33 @@ public partial class MainWindow : Window
             }
         }
 
+        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПРИСУТСТВУЕТ, поле "ВВОДА" = 0, нажата КЛАВИША 0.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() != "" && LabelInputDisplay.Content.ToString() == "0" && ((Button)sender).Content.ToString() == "0")
+            return;
+
+
         // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = присутствует, поле "ВВОДА" = любое, нажата КЛАВИША 0-9.
-        if (LabelDisplayOfPreviousOperations.Content.ToString() != "")
-            if (_newNumber)
-            {
-                LabelInputDisplay.Content = ((Button)sender).Content.ToString();
-                _newNumber = false;
-            }
-            else
-            {
-                // Если длина поля "ВВОДА" == 16, то выход.
-                if (LabelInputDisplay.Content.ToString().Length > 15)
-                    return;
-                else
-                {
-                    LabelInputDisplay.Content += ((Button)sender).Content.ToString();
-                    return;
-                }
-            }
+        //if (LabelDisplayOfPreviousOperations.Content.ToString() != "")
+        //    if (_newNumber)
+        //    {
+        //        LabelInputDisplay.Content = ((Button)sender).Content.ToString();
+        //        _newNumber = false;
+        //    }
+        //    else
+        //    {
+        //        // Если длина поля "ВВОДА" > 16, то выход.
+        //        if (LabelInputDisplay.Content.ToString().Length > 15)
+        //            return;
+        //        else
+        //        {
+        //            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+        //            return;
+        //        }
+        //    }
+
+
+        // todo: сделать таки же ифи для ситуации когда "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = присутствует
+        // todo: при наличи предыдущей операции можно ввести в поле ввода 09, ... исправить
 
     }
 
@@ -181,18 +201,20 @@ public partial class MainWindow : Window
             switch (operation)
             {
                 case '+':
-                    LabelInputDisplay.Content = Math.Round((Convert.ToDouble(previousNumber) + Convert.ToDouble(input)), 16);
+                    LabelInputDisplay.Content = Math.Round(Decimal.Parse(previousNumber) + Decimal.Parse(input), 15);
                     break;
                 case '-':
-                    LabelInputDisplay.Content = Math.Round((Convert.ToDouble(previousNumber) - Convert.ToDouble(input)), 16);
+                    LabelInputDisplay.Content = Math.Round(Decimal.Parse(previousNumber) - Decimal.Parse(input), 15);
                     break;
                 case '*':
-                    LabelInputDisplay.Content = Math.Round((Convert.ToDouble(previousNumber) * Convert.ToDouble(input)), 16);
+                    LabelInputDisplay.Content = Math.Round(Decimal.Parse(previousNumber) * Decimal.Parse(input), 15);
                     break;
                 case '/':
-                    LabelInputDisplay.Content = Math.Round((Convert.ToDouble(previousNumber) / Convert.ToDouble(input)), 16);
+                    LabelInputDisplay.Content = Math.Round(Decimal.Parse(previousNumber) / Decimal.Parse(input), 15);
                     break;
             }
         }
+
+        _result = true;
     }
 }

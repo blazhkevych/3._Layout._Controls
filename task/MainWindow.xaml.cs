@@ -76,30 +76,48 @@ public partial class MainWindow : Window
             LabelInputDisplay.Content = "0";
     }
 
+    // Начало ввода нового числа.
+    private bool _newNumber = false;
+
     // Buttons "0" - "9" add the corresponding digit to the end of the current number.
     private void ButtonNumber_OnClick(object sender, RoutedEventArgs e)
     {
         // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = 0, нажата КЛАВИША 0.
         if (LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString() == "0" && ((Button)sender).Content.ToString() == "0")
             return;
-        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = 0, нажата КЛАВИША 0.
-        
-
-
-
-
-
-        // Если поле ввода = 0 и поле предыдущей операции пустое, менаем 0 на вводимое число.
-        if (LabelInputDisplay.Content.ToString() == "0" && LabelDisplayOfPreviousOperations.Content.ToString() == "")
-            LabelInputDisplay.Content = ((Button)sender).Content;
-        // Если поле ввода не 0 и поле предыдущей операции не пустое.
-        else if (LabelDisplayOfPreviousOperations.Content.ToString() != "" && LabelInputDisplay.Content.ToString() == "0,")
+        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = 0, нажата КЛАВИША 1-9.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString() == "0" && ((Button)sender).Content.ToString() != "0")
+        {
             LabelInputDisplay.Content = ((Button)sender).Content.ToString();
-        // Если поле ввода 0 и поле предыдущей операции не пустое.
-        else if (LabelDisplayOfPreviousOperations.Content.ToString() != "" && LabelInputDisplay.Content.ToString() == "0")
             return;
-        else
+        }
+        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = "0,", нажата КЛАВИША 0-9.
+        if (
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "0" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "1" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "2" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "3" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "4" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "5" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "6" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "7" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "8" ||
+            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "9")
+        {
             LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+            return;
+        }
+        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = не "0,", нажата КЛАВИША 0-9.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() == "")
+        {
+            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+            return;
+        }
+
+        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = присутствует, поле "ВВОДА" = любое, нажата КЛАВИША 0-9.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() != "")
+            if (_newNumber)
+                LabelInputDisplay.Content += ((Button)sender).Content.ToString();
     }
 
     // Button "." adds a decimal point to the current number.
@@ -118,6 +136,10 @@ public partial class MainWindow : Window
             LabelDisplayOfPreviousOperations.Content =
                 LabelDisplayOfPreviousOperations.Content.ToString()
                     .Remove(LabelDisplayOfPreviousOperations.Content.ToString().Length - 1) + ((Button)sender).Content;
+        if (_newNumber)
+            _newNumber = false;
+        else
+            _newNumber = true;
     }
 
     // The "=" button evaluates the expression and displays the result.

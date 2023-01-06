@@ -104,20 +104,45 @@ public partial class MainWindow : Window
             LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "8" ||
             LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "9")
         {
-            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+            // Если длина поля "ВВОДА" == 16, то выход.
+            if (LabelInputDisplay.Content.ToString().Length > 15)
+                return;
+            else
+                LabelInputDisplay.Content += ((Button)sender).Content.ToString();
             return;
         }
         // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = не "0,", нажата КЛАВИША 0-9.
         if (LabelDisplayOfPreviousOperations.Content.ToString() == "")
         {
-            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
-            return;
+            // Если длина поля "ВВОДА" == 16, то выход.
+            if (LabelInputDisplay.Content.ToString().Length > 15)
+                return;
+            else
+            {
+                LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+                return;
+            }
         }
 
         // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = присутствует, поле "ВВОДА" = любое, нажата КЛАВИША 0-9.
         if (LabelDisplayOfPreviousOperations.Content.ToString() != "")
             if (_newNumber)
-                LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+            {
+                LabelInputDisplay.Content = ((Button)sender).Content.ToString();
+                _newNumber = false;
+            }
+            else
+            {
+                // Если длина поля "ВВОДА" == 16, то выход.
+                if (LabelInputDisplay.Content.ToString().Length > 15)
+                    return;
+                else
+                {
+                    LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+                    return;
+                }
+            }
+
     }
 
     // Button "." adds a decimal point to the current number.
@@ -136,10 +161,10 @@ public partial class MainWindow : Window
             LabelDisplayOfPreviousOperations.Content =
                 LabelDisplayOfPreviousOperations.Content.ToString()
                     .Remove(LabelDisplayOfPreviousOperations.Content.ToString().Length - 1) + ((Button)sender).Content;
-        if (_newNumber)
-            _newNumber = false;
-        else
-            _newNumber = true;
+        //if (_newNumber)
+        //    _newNumber = false;
+        //else
+        _newNumber = true;
     }
 
     // The "=" button evaluates the expression and displays the result.
@@ -156,16 +181,16 @@ public partial class MainWindow : Window
             switch (operation)
             {
                 case '+':
-                    LabelInputDisplay.Content = (Convert.ToDouble(previousNumber) + Convert.ToDouble(input)).ToString();
+                    LabelInputDisplay.Content = Math.Round((Convert.ToDouble(previousNumber) + Convert.ToDouble(input)), 16);
                     break;
                 case '-':
-                    LabelInputDisplay.Content = (Convert.ToDouble(previousNumber) - Convert.ToDouble(input)).ToString();
+                    LabelInputDisplay.Content = Math.Round((Convert.ToDouble(previousNumber) - Convert.ToDouble(input)), 16);
                     break;
                 case '*':
-                    LabelInputDisplay.Content = (Convert.ToDouble(previousNumber) * Convert.ToDouble(input)).ToString();
+                    LabelInputDisplay.Content = Math.Round((Convert.ToDouble(previousNumber) * Convert.ToDouble(input)), 16);
                     break;
                 case '/':
-                    LabelInputDisplay.Content = (Convert.ToDouble(previousNumber) / Convert.ToDouble(input)).ToString();
+                    LabelInputDisplay.Content = Math.Round((Convert.ToDouble(previousNumber) / Convert.ToDouble(input)), 16);
                     break;
             }
         }

@@ -79,8 +79,25 @@ public partial class MainWindow : Window
     // Buttons "0" - "9" add the corresponding digit to the end of the current number.
     private void ButtonNumber_OnClick(object sender, RoutedEventArgs e)
     {
-        if (LabelInputDisplay.Content.ToString() == "0")
+        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = 0, нажата КЛАВИША 0.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString() == "0" && ((Button)sender).Content.ToString() == "0")
+            return;
+        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = 0, нажата КЛАВИША 0.
+        
+
+
+
+
+
+        // Если поле ввода = 0 и поле предыдущей операции пустое, менаем 0 на вводимое число.
+        if (LabelInputDisplay.Content.ToString() == "0" && LabelDisplayOfPreviousOperations.Content.ToString() == "")
             LabelInputDisplay.Content = ((Button)sender).Content;
+        // Если поле ввода не 0 и поле предыдущей операции не пустое.
+        else if (LabelDisplayOfPreviousOperations.Content.ToString() != "" && LabelInputDisplay.Content.ToString() == "0,")
+            LabelInputDisplay.Content = ((Button)sender).Content.ToString();
+        // Если поле ввода 0 и поле предыдущей операции не пустое.
+        else if (LabelDisplayOfPreviousOperations.Content.ToString() != "" && LabelInputDisplay.Content.ToString() == "0")
+            return;
         else
             LabelInputDisplay.Content += ((Button)sender).Content.ToString();
     }

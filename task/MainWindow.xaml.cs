@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace task;
-// Элементы управления 22:13
-
 // Тема «Элементы управления»
 // Разработать WPF-приложение «Калькулятор».
 // 
@@ -46,6 +43,12 @@ namespace task;
 
 public partial class MainWindow : Window
 {
+    // Start entering a new number.
+    private bool _newNumber;
+
+    // Was the enter button pressed.
+    private bool _result;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -77,15 +80,10 @@ public partial class MainWindow : Window
             LabelInputDisplay.Content = "0";
     }
 
-    // Начало ввода нового числа.
-    private bool _newNumber = false;
-    // Был нажат ентер
-    private bool _result = false;
-
     // Buttons "0" - "9" add the corresponding digit to the end of the current number.
     private void ButtonNumber_OnClick(object sender, RoutedEventArgs e)
     {
-        // Если был нажат "=", то сбросить все поля на значения по умолчанию.
+        // If "=" was pressed, reset all fields to default values.
         if (_result)
         {
             LabelInputDisplay.Content = "0";
@@ -93,76 +91,116 @@ public partial class MainWindow : Window
             _result = false;
         }
 
-        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = 0, нажата КЛАВИША 0.
-        if (LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString() == "0" && ((Button)sender).Content.ToString() == "0")
+        // If the "PREVIOUS OPERATION" field is EMPTY, the "INPUT" field is 0, the 0 key is pressed.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString() == "0" &&
+            ((Button)sender).Content.ToString() == "0")
             return;
-        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = 0, нажата КЛАВИША 1-9.
-        if (LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString() == "0" && ((Button)sender).Content.ToString() != "0")
+        // If the "PREVIOUS OPERATION" field is EMPTY, the "INPUT" field is 0, the 1-9 key is pressed.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString() == "0" &&
+            ((Button)sender).Content.ToString() != "0")
         {
             LabelInputDisplay.Content = ((Button)sender).Content.ToString();
             return;
         }
-        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = "0,", нажата КЛАВИША 0-9.
+
+        // If the "PREVIOUS OPERATION" field is EMPTY, the "INPUT" field is "0,", the 0-9 key is pressed.
         if (
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "0" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "1" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "2" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "3" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "4" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "5" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "6" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "7" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "8" ||
-            LabelDisplayOfPreviousOperations.Content.ToString() == "" && LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "9")
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "0") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "1") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "2") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "3") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "4") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "5") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "6") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "7") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "8") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() == "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "9"))
         {
-            // Если длина поля "ВВОДА" == 16, то выход.
+            // If the length of the "INPUT" field == 16, then exit.
             if (LabelInputDisplay.Content.ToString().Length > 15)
                 return;
-            else
-                LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
             return;
         }
-        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПУСТО, поле "ВВОДА" = не "0,", нажата КЛАВИША 0-9.
+
+        // If "Previous Operation" field = EMPTY, "ENTER" field = not "0," KEY 0-9 is pressed.
         if (LabelDisplayOfPreviousOperations.Content.ToString() == "")
         {
-            // Если длина поля "ВВОДА" == 16, то выход.
-            if (LabelInputDisplay.Content.ToString().Length > 15)
-                return;
-            else
-            {
-                LabelInputDisplay.Content += ((Button)sender).Content.ToString();
-                return;
-            }
+            // If the length of the "INPUT" field == 16, then exit.
+            if (LabelInputDisplay.Content.ToString().Length > 15) return;
+
+            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+            return;
         }
 
-        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = ПРИСУТСТВУЕТ, поле "ВВОДА" = 0, нажата КЛАВИША 0.
-        if (LabelDisplayOfPreviousOperations.Content.ToString() != "" && LabelInputDisplay.Content.ToString() == "0" && ((Button)sender).Content.ToString() == "0")
+        //////////////////////////////////////////"Previous Operation" = PRESENT////////////////////////////////////////////////////
+        // If the "Previous Operation" field = PRESENT, the "INPUT" field = 0, KEY 0 was pressed.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() != "" && LabelInputDisplay.Content.ToString() == "0" &&
+            ((Button)sender).Content.ToString() == "0")
             return;
+        // If "Previous Operation" field = PRESENT, "ENTER" field = 0, KEY 1-9 is pressed.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() != "" && LabelInputDisplay.Content.ToString() == "0" &&
+            ((Button)sender).Content.ToString() != "0")
+        {
+            LabelInputDisplay.Content = ((Button)sender).Content.ToString();
+            return;
+        }
 
+        // If "Previous Operation" field = PRESENT, "ENTER" field = "0," KEY 0-9 is pressed.
+        if (
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "0") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "1") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "2") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "3") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "4") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "5") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "6") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "7") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "8") ||
+            (LabelDisplayOfPreviousOperations.Content.ToString() != "" &&
+             LabelInputDisplay.Content.ToString().Contains("0,") && ((Button)sender).Content.ToString() == "9"))
+        {
+            // If the length of the "INPUT" field == 16, then exit.
+            if (LabelInputDisplay.Content.ToString().Length > 15)
+                return;
+            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+            return;
+        }
 
-        // Если поле "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = присутствует, поле "ВВОДА" = любое, нажата КЛАВИША 0-9.
-        //if (LabelDisplayOfPreviousOperations.Content.ToString() != "")
-        //    if (_newNumber)
-        //    {
-        //        LabelInputDisplay.Content = ((Button)sender).Content.ToString();
-        //        _newNumber = false;
-        //    }
-        //    else
-        //    {
-        //        // Если длина поля "ВВОДА" > 16, то выход.
-        //        if (LabelInputDisplay.Content.ToString().Length > 15)
-        //            return;
-        //        else
-        //        {
-        //            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
-        //            return;
-        //        }
-        //    }
+        // If the "Previous Operation" field = PRESENT, the "INPUT" field = not "0," KEY 0-9 was pressed.
+        if (LabelDisplayOfPreviousOperations.Content.ToString() != "")
+        {
+            // If the length of the "INPUT" field == 16, then exit.
+            if (LabelInputDisplay.Content.ToString().Length > 15) return;
 
+            if (_newNumber)
+            {
+                LabelInputDisplay.Content = ((Button)sender).Content.ToString();
+                _newNumber = false;
+                return;
+            }
 
-        // todo: сделать таки же ифи для ситуации когда "ПРЕДЫДУЩАЯ ОПЕРАЦИЯ" = присутствует
-        // todo: при наличи предыдущей операции можно ввести в поле ввода 09, ... исправить
-
+            LabelInputDisplay.Content += ((Button)sender).Content.ToString();
+        }
     }
 
     // Button "." adds a decimal point to the current number.
@@ -181,9 +219,6 @@ public partial class MainWindow : Window
             LabelDisplayOfPreviousOperations.Content =
                 LabelDisplayOfPreviousOperations.Content.ToString()
                     .Remove(LabelDisplayOfPreviousOperations.Content.ToString().Length - 1) + ((Button)sender).Content;
-        //if (_newNumber)
-        //    _newNumber = false;
-        //else
         _newNumber = true;
     }
 
@@ -201,16 +236,16 @@ public partial class MainWindow : Window
             switch (operation)
             {
                 case '+':
-                    LabelInputDisplay.Content = Math.Round(Decimal.Parse(previousNumber) + Decimal.Parse(input), 15);
+                    LabelInputDisplay.Content = Math.Round(decimal.Parse(previousNumber) + decimal.Parse(input), 15);
                     break;
                 case '-':
-                    LabelInputDisplay.Content = Math.Round(Decimal.Parse(previousNumber) - Decimal.Parse(input), 15);
+                    LabelInputDisplay.Content = Math.Round(decimal.Parse(previousNumber) - decimal.Parse(input), 15);
                     break;
                 case '*':
-                    LabelInputDisplay.Content = Math.Round(Decimal.Parse(previousNumber) * Decimal.Parse(input), 15);
+                    LabelInputDisplay.Content = Math.Round(decimal.Parse(previousNumber) * decimal.Parse(input), 15);
                     break;
                 case '/':
-                    LabelInputDisplay.Content = Math.Round(Decimal.Parse(previousNumber) / Decimal.Parse(input), 15);
+                    LabelInputDisplay.Content = Math.Round(decimal.Parse(previousNumber) / decimal.Parse(input), 15);
                     break;
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -214,42 +215,82 @@ public partial class MainWindow : Window
     {
         // When you press the "/", "*", "+", "-" button, the number in the input field must be written in the previous operations field together with the value on the button.
         if (LabelDisplayOfPreviousOperations.Content.ToString() == "")
+        {
             LabelDisplayOfPreviousOperations.Content = LabelInputDisplay.Content + " " + ((Button)sender).Content;
+            _newNumber = true;
+        }
         else
-            LabelDisplayOfPreviousOperations.Content =
-                LabelDisplayOfPreviousOperations.Content.ToString()
-                    .Remove(LabelDisplayOfPreviousOperations.Content.ToString().Length - 1) + ((Button)sender).Content;
-        _newNumber = true;
+        {
+            // The sign of the operation between the 1st number and the second number.
+            var signOfTheOperation = LabelDisplayOfPreviousOperations.Content.ToString()
+                .ElementAt(LabelDisplayOfPreviousOperations.Content.ToString().Length - 1);
+            // The first number for the operation.
+            var prevNumber = LabelDisplayOfPreviousOperations.Content.ToString()
+                .Remove(LabelDisplayOfPreviousOperations.Content.ToString().Length - 2);
+            // 2 number for operation.
+            var inputNumber = LabelInputDisplay.Content.ToString();
+
+            decimal result = 0;
+            switch (signOfTheOperation)
+            {
+                case '+':
+                    result = Math.Round(decimal.Parse(prevNumber) + decimal.Parse(inputNumber), 15);
+                    break;
+                case '-':
+                    result = Math.Round(decimal.Parse(prevNumber) - decimal.Parse(inputNumber), 15);
+                    break;
+                case '*':
+                    result = Math.Round(decimal.Parse(prevNumber) * decimal.Parse(inputNumber), 15);
+                    break;
+                case '/':
+                    result = Math.Round(decimal.Parse(prevNumber) / decimal.Parse(inputNumber), 15);
+                    break;
+                default:
+                    return;
+            }
+
+            LabelDisplayOfPreviousOperations.Content = result + " " + ((Button)sender).Content;
+            LabelInputDisplay.Content = result;
+
+            _newNumber = true;
+        }
     }
 
     // The "=" button evaluates the expression and displays the result.
     private void ButtonEqual_OnClick(object sender, RoutedEventArgs e)
     {
-        // When you press the "=" button, you need to calculate the expression that is written in the previous operations field and display the result in the input field.
-        var input = LabelInputDisplay.Content.ToString();
-        var previousOperations = LabelDisplayOfPreviousOperations.Content.ToString();
+        if (LabelDisplayOfPreviousOperations.Content.ToString()
+                .ElementAt(LabelDisplayOfPreviousOperations.Content.ToString().Length - 1) == '=')
+            return;
+        // The sign of the operation between the 1st number and the second number.
+        var signOfTheOperation = LabelDisplayOfPreviousOperations.Content.ToString()
+            .ElementAt(LabelDisplayOfPreviousOperations.Content.ToString().Length - 1);
+        // The first number for the operation.
+        var prevNumber = LabelDisplayOfPreviousOperations.Content.ToString()
+            .Remove(LabelDisplayOfPreviousOperations.Content.ToString().Length - 2);
+        // 2 number for operation.
+        var inputNumber = LabelInputDisplay.Content.ToString();
 
-        if (previousOperations != "")
+        decimal result = 0;
+        switch (signOfTheOperation)
         {
-            var operation = previousOperations[previousOperations.Length - 1];
-            var previousNumber = previousOperations.Remove(previousOperations.Length - 1).Replace(" ", "");
-            switch (operation)
-            {
-                case '+':
-                    LabelInputDisplay.Content = Math.Round(decimal.Parse(previousNumber) + decimal.Parse(input), 15);
-                    break;
-                case '-':
-                    LabelInputDisplay.Content = Math.Round(decimal.Parse(previousNumber) - decimal.Parse(input), 15);
-                    break;
-                case '*':
-                    LabelInputDisplay.Content = Math.Round(decimal.Parse(previousNumber) * decimal.Parse(input), 15);
-                    break;
-                case '/':
-                    LabelInputDisplay.Content = Math.Round(decimal.Parse(previousNumber) / decimal.Parse(input), 15);
-                    break;
-            }
+            case '+':
+                result = Math.Round(decimal.Parse(prevNumber) + decimal.Parse(inputNumber), 15);
+                break;
+            case '-':
+                result = Math.Round(decimal.Parse(prevNumber) - decimal.Parse(inputNumber), 15);
+                break;
+            case '*':
+                result = Math.Round(decimal.Parse(prevNumber) * decimal.Parse(inputNumber), 15);
+                break;
+            case '/':
+                result = Math.Round(decimal.Parse(prevNumber) / decimal.Parse(inputNumber), 15);
+                break;
         }
 
-        _result = true;
+        LabelDisplayOfPreviousOperations.Content = result + " " + ((Button)sender).Content;
+        LabelInputDisplay.Content = result;
+
+        _newNumber = true;
     }
 }
